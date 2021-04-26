@@ -1,4 +1,4 @@
-const base = window.location.host.includes('localhost') ? '//localhost:3000/' : '/'
+const base = window.location.hotst.includes('localhost') ? '//localhost:3000/' : '/'
 
 export const api = axios.create({
   baseURL: base,
