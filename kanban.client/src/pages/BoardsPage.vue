@@ -25,7 +25,7 @@
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-// import { boardsService } from '../services/BoardsService'
+import { boardsService } from '../services/BoardsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 export default {
