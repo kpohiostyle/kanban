@@ -4,7 +4,7 @@ import { api } from './AxiosService.js'
 
 class BoardsService {
   async getAll() {
-    const res = await api.get('boards')
+    const res = await api.get('api/boards')
     AppState.boards = res.data
   }
 
@@ -14,7 +14,7 @@ class BoardsService {
   //   }
 
   async createBoard(newBoard) {
-    const res = await api.post('boards', newBoard)
+    const res = await api.post('api/boards', newBoard)
     AppState.boards.push(res.data)
     // everytime a car is created, we will change pages
   }

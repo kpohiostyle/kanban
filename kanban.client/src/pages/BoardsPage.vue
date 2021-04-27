@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <form @submit.prevent="addBoard">
+    <form @submit.prevent="createBoard">
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text"
@@ -8,33 +8,35 @@
                name="title"
                id="title"
                aria-describedby="helpId"
-               placeholder="Title..."
+               placeholder="Add New Board......"
                v-model="state.newBoard.title"
         >
       </div>
       <button class="btn btn-success" type="submit">
-        Add Photo
+        Add Board
       </button>
     </form>
   </div>
 
   <div class="row">
-    <BoardComponent v-for="board in state.boards" :key="board.id" :board="board" />
+    <!-- <router-link :to="{name:'BoardsDetail', params:{id: board.id}}"> -->
+    <p v-for="board in state.boards" :key="board.id" :board="board">
+      {{ board.title }}
+    </p>
+    <!-- </router-link> -->
   </div>
 </template>
 <script>
 import { computed, onMounted, reactive } from 'vue'
-import { useRoute } from 'vue-router'
 import { boardsService } from '../services/BoardsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 export default {
   name: 'BoardsPage',
   setup() {
-    const route = useRoute()
     const state = reactive({
       newBoard: {},
-      board: computed(() => AppState.activeBoard),
+      boards: computed(() => AppState.boards),
       user: computed(() => AppState.user),
       account: computed(() => AppState.account)
     })
@@ -47,10 +49,9 @@ export default {
     })
     return {
       state,
-      route,
-      async addBoard() {
+      async createBoard() {
         try {
-          await boardsService.addBoard(route.params.id, state.newBoard)
+          await boardsService.createBoard(state.newBoard)
           state.newBoard = {}
           Notification.toast('Added Board', 'success')
         } catch (error) {

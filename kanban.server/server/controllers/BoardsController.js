@@ -17,7 +17,7 @@ export class BoardsController extends BaseController {
 
   async getAll(req, res, next) {
     try {
-      const data = await boardsService.getAll()
+      const data = await boardsService.getAll({ creatorId: req.userInfo.id })
       return res.send(data)
     } catch (error) {
       next(error)
@@ -35,7 +35,8 @@ export class BoardsController extends BaseController {
 
   async createBoard(req, res, next) {
     try {
-      const data = boardsService.createBoard(res.body)
+      req.body.creatorId = req.userInfo.id
+      const data = boardsService.createBoard(req.body)
       res.send(data)
     } catch (error) {
       next(error)
