@@ -1,6 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { boardsService } from '../services/BoardsService'
+import { listsService } from './ListsController'
 // import { get } from 'mongoose'
 
 export class BoardsController extends BaseController {
@@ -10,7 +11,8 @@ export class BoardsController extends BaseController {
     // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
-      .get('/:id/', this.getBoardById)
+      .get('/:id/lists', this.getLists)
+      .get('/:id', this.getBoardById)
       .post('', this.createBoard)
       .delete('/:id', this.deleteBoard)
   }
@@ -26,7 +28,7 @@ export class BoardsController extends BaseController {
 
   async getBoardById(req, res, next) {
     try {
-      const data = boardsService.getBoardById(res.params.id)
+      const data = await boardsService.getBoardById(req.params.id)
       return res.send(data)
     } catch (error) {
 
@@ -46,6 +48,15 @@ export class BoardsController extends BaseController {
   async deleteBoard(req, res, next) {
     try {
       const data = await boardsService.deleteBoard(req.params.id)
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getLists(req, res, next) {
+    try {
+      const data = await listsService.getLists({ boardId: req.params.id })
       return res.send(data)
     } catch (error) {
       next(error)

@@ -1,29 +1,37 @@
 <template>
   <div class="container-fluid">
-    <form @submit.prevent="createBoard">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text"
-               class="form-control"
-               name="title"
-               id="title"
-               aria-describedby="helpId"
-               placeholder="Add New Board......"
-               v-model="state.newBoard.title"
-        >
+    <div class="row">
+      <div class="col-sm-6">
+        <form @submit.prevent="createBoard">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   name="title"
+                   id="title"
+                   aria-describedby="helpId"
+                   placeholder="Add New Board......"
+                   v-model="state.newBoard.title"
+            />
+          </div>
+          <button class="btn btn-success" type="submit">
+            Add Board
+          </button>
+        </form>
       </div>
-      <button class="btn btn-success" type="submit">
-        Add Board
-      </button>
-    </form>
-  </div>
+    </div>
 
-  <div class="row">
-    <!-- <router-link :to="{name:'BoardsDetail', params:{id: board.id}}"> -->
-    <p v-for="board in state.boards" :key="board.id" :board="board">
-      {{ board.title }}
-    </p>
-    <!-- </router-link> -->
+    <div class="row">
+      <div class="col-sm-4 mt-5">
+        <div v-for="board in state.boards" :key="board.id" :board="board">
+          <router-link :to="{name:'BoardsDetail', params:{id: board.id}}">
+            <p>
+              {{ board.title }}
+            </p>
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -37,6 +45,8 @@ export default {
     const state = reactive({
       newBoard: {},
       boards: computed(() => AppState.boards),
+      activeBoard: computed(() => AppState.activeBoard),
+
       user: computed(() => AppState.user),
       account: computed(() => AppState.account)
     })
@@ -65,6 +75,7 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       }
+
     }
   },
   components: {}

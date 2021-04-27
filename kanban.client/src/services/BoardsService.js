@@ -8,10 +8,10 @@ class BoardsService {
     AppState.boards = res.data
   }
 
-  //   async getBoardById(id) {
-  //     const res = await api.get('boards/' + id)
-  //     AppState.boards = res.data
-  //   }
+  async getActiveBoard(id) {
+    const res = await api.get('api/boards/' + id)
+    AppState.activeBoard = res.data
+  }
 
   async createBoard(newBoard) {
     const res = await api.post('api/boards', newBoard)
@@ -20,7 +20,7 @@ class BoardsService {
   }
 
   async deleteBoard(id) {
-    await api.delete('boards/' + id)
+    await api.delete('api/boards/' + id)
     AppState.boards = AppState.boards.filter(b => b.id !== id)
   }
 }
