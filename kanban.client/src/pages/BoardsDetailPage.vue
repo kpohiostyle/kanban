@@ -30,8 +30,8 @@
         </form>
       </div>
     </div>
-    <div class="row">
-      <!-- <ListComponent v-for="" /> -->
+    <div class="row" v-if="state.lists">
+      <ListComponent v-for="list in state.lists" :key="list.id" :list="list" />
     </div>
   </div>
 </template>
@@ -55,6 +55,7 @@ export default {
     onMounted(async() => {
       try {
         await boardsService.getActiveBoard(route.params.id)
+        await listsService.getLists(route.params.id)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }

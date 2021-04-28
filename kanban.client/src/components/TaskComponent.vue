@@ -1,29 +1,29 @@
 <template lang="">
-  <div class="col-sm-4 shadow">
+  <div class="col-sm-12 shadow my-1">
     <div class="bg-grey d-flex flex-direction justify-content-between inline">
       <h5 class="text-white py-3">
         {{ list.title }}
       </h5>
-      <button type="button" class="btn btn-danger" @click="deleteList">
+      <button type="button" class="btn btn-danger" @click="deleteTask">
         Delete
       </button>
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <form @submit.prevent="createTask">
+        <form @submit.prevent="createComment">
           <div class="form-group">
-            <label for="title">Task Title</label>
+            <label for="title">Comment Title</label>
             <input type="text"
                    class="form-control"
                    name="title"
                    id="title"
                    aria-describedby="helpId"
-                   placeholder="Add New Task......"
-                   v-model="state.newTask.title"
+                   placeholder="Add New Comment......"
+                   v-model="state.newComment.title"
             />
           </div>
           <button class="btn btn-success" type="submit">
-            Add Task
+            Add Comment
           </button>
         </form>
       </div>
@@ -34,7 +34,9 @@
     </div>
 
     <div class="row">
-    <!-- TaskComponent -->
+      <div class="col">
+        <!-- CommentComponent -->
+      </div>
     </div>
   </div>
 </template>
@@ -44,11 +46,11 @@ import Notification from '../utils/Notification'
 import { AppState } from '../AppState'
 import { reactive, computed, onMounted } from 'vue'
 import { tasksService } from '../services/TasksService'
-import { listsService } from '../services/ListsService'
+import { commentsService } from '../services/CommentsService'
 export default {
-  name: 'ListComponent',
+  name: 'TaskComponent',
   props: {
-    list: {
+    task: {
       type: Object,
       required: true
     }
@@ -56,13 +58,13 @@ export default {
   setup(props) {
     const route = useRoute()
     const state = reactive({
-      newTask: {},
-      tasks: computed(() => AppState.tasks)
+      newComment: {},
+      comments: computed(() => AppState.comments)
 
     })
     onMounted(async() => {
       try {
-        await tasksService.getTasks(route.params.id)
+        await tasksService.getComments(route.params.id)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }
@@ -70,20 +72,20 @@ export default {
     return {
       route,
       state,
-      async deleteList() {
+      async deleteTask() {
         try {
-          await listsService.deleteList(props.list.id)
+          await tasksService.deleteTask(props.task.id)
           Notification.toast('Successfully Deleted', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async createTask() {
+      async createComment() {
         try {
-          state.newTask.listId = route.params.id
-          await tasksService.createTask(state.newTask)
-          state.newTask = {}
-          Notification.toast('Added List', 'success')
+          state.newComment.taskId = route.params.id
+          await commentsService.createTask(state.newComment)
+          state.newComment = {}
+          Notification.toast('Added Comment', 'success')
         } catch (error) {
           Notification.toast('Error:' + error, 'error')
         }
@@ -95,7 +97,5 @@ export default {
 }
 </script>
 <style scoped>
-.bg-grey{
-  background-color: rgb(70, 70, 70);
-}
+
 </style>
