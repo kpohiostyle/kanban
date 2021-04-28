@@ -5,14 +5,12 @@ import { api } from './AxiosService.js'
 class TasksService {
   async getTasks(listId) {
     const res = await api.get(`api/lists/${listId}/tasks`)
-    AppState.tasks = res.data
+    AppState.tasks[listId] = res.data
   }
 
   async createTask(newTask) {
     const res = await api.post('api/tasks', newTask)
-    AppState.tasks.push(res.data)
-    this.getTasks(newTask.list)
-    // everytime a car is created, we will change pages
+    this.getTasks(res.data.listId)
   }
 
   async deleteList(id) {

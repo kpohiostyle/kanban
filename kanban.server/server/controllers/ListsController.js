@@ -16,7 +16,7 @@ export class ListsController extends BaseController {
 
   async getTasks(req, res, next) {
     try {
-      const data = await tasksService.getLists({ listId: req.params.id })
+      const data = await tasksService.getTasks({ listId: req.params.id })
       return res.send(data)
     } catch (error) {
       next(error)

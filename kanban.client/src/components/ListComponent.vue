@@ -57,12 +57,12 @@ export default {
     const route = useRoute()
     const state = reactive({
       newTask: {},
-      tasks: computed(() => AppState.tasks)
+      tasks: computed(() => AppState.tasks[state.listId])
 
     })
     onMounted(async() => {
       try {
-        await tasksService.getTasks(route.params.id)
+        await tasksService.getTasks(props.list.id)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }
@@ -80,7 +80,7 @@ export default {
       },
       async createTask() {
         try {
-          state.newTask.listId = route.params.id
+          state.newTask.listId = props.list.id
           await tasksService.createTask(state.newTask)
           state.newTask = {}
           Notification.toast('Added List', 'success')
