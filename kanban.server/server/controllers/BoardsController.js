@@ -1,7 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { boardsService } from '../services/BoardsService'
-import { listsService } from './ListsController'
+import { listsService } from '../services/ListsService'
 // import { get } from 'mongoose'
 
 export class BoardsController extends BaseController {

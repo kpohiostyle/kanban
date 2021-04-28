@@ -27,7 +27,7 @@ export class ListsController extends BaseController {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorId = req.userInfo.id
-      const data = listsService.createList(req.body)
+      const data = await listsService.createList(req.body)
       res.send(data)
     } catch (error) {
       next(error)

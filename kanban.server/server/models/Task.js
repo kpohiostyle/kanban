@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 const Task = new Schema(
   {
     title: { type: String, required: true },
-    ListId: { type: Object, ref: 'List', required: true },
-    CreatorId: { type: String, ref: 'Account', required: true }
+    listId: { type: Object, ref: 'List', required: true },
+    creatorId: { type: String, ref: 'Account', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

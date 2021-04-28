@@ -10,6 +10,29 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <form @submit.prevent="createList">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   name="title"
+                   id="title"
+                   aria-describedby="helpId"
+                   placeholder="Add New List......"
+                   v-model="state.newList.title"
+            />
+          </div>
+          <button class="btn btn-success" type="submit">
+            Add List
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <ListComponent v-for="" /> -->
+    </div>
   </div>
 </template>
 <script>
@@ -18,12 +41,14 @@ import { useRoute, useRouter } from 'vue-router'
 import { AppState } from '../AppState'
 import { reactive, computed, onMounted } from 'vue'
 import { boardsService } from '../services/BoardsService'
+import { listsService } from '../services/ListsService'
 export default {
   name: 'BoardsDetail',
   setup() {
     const route = useRoute()
     const router = useRouter()
     const state = reactive({
+      newList: {},
       activeBoard: computed(() => AppState.activeBoard),
       lists: computed(() => AppState.lists)
     })
@@ -46,7 +71,18 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      async createList() {
+        try {
+          state.newList.boardId = route.params.id
+          await listsService.createList(state.newList)
+          state.newList = {}
+          Notification.toast('Added List', 'success')
+        } catch (error) {
+          Notification.toast('Error:' + error, 'error')
+        }
       }
+
     }
   },
   components: {}

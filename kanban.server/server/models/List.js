@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const List = new Schema(
   {
     title: { type: String, required: true },
-    BoardId: { type: Object, ref: 'Board', required: true },
+    boardId: { type: Object, ref: 'Board', required: true },
     creatorId: { type: String, ref: 'Account', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
