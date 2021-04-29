@@ -13,9 +13,13 @@ class TasksService {
     this.getTasks(res.data.listId)
   }
 
-  async deleteList(id) {
+  async deleteTask(listId, id) {
     await api.delete(`api/tasks/${id}`)
-    AppState.tasks = AppState.tasks.filter(b => b.id !== id)
+    AppState.tasks[listId] = AppState.tasks[listId].filter(t => t.id !== id)
+  }
+
+  async editTask(listId, body) {
+    await api.tasks.put(`api/tasks/${liid}, )
   }
 }
 
