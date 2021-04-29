@@ -34,7 +34,7 @@
     </div>
 
     <div class="row">
-    <!-- TaskComponent -->
+      <TaskComponent v-for="task in state.tasks" :key="task.id" :task="task" />
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default {
     const route = useRoute()
     const state = reactive({
       newTask: {},
-      tasks: computed(() => AppState.tasks[state.listId])
+      tasks: computed(() => AppState.tasks[props.list.id])
 
     })
     onMounted(async() => {

@@ -1,8 +1,8 @@
 <template lang="">
-  <div class="col-sm-12 shadow my-1">
-    <div class="bg-grey d-flex flex-direction justify-content-between inline">
-      <h5 class="text-white py-3">
-        {{ list.title }}
+  <div class="col-sm-12 shadow my-1 bg-grey">
+    <div class="d-flex flex-direction justify-content-between inline">
+      <h5 class="task py-3">
+        {{ task.title }}
       </h5>
       <button type="button" class="btn btn-danger" @click="deleteTask">
         Delete
@@ -74,7 +74,7 @@ export default {
       state,
       async deleteTask() {
         try {
-          await tasksService.deleteTask(props.task.id)
+          await tasksService.deleteTask(props.task.listId, props.task.id)
           Notification.toast('Successfully Deleted', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
@@ -82,7 +82,7 @@ export default {
       },
       async createComment() {
         try {
-          state.newComment.taskId = route.params.id
+          state.newComment.taskId = props.task.id
           await commentsService.createTask(state.newComment)
           state.newComment = {}
           Notification.toast('Added Comment', 'success')
@@ -97,5 +97,11 @@ export default {
 }
 </script>
 <style scoped>
+.bg-grey{
+    background-color: rgb(167, 166, 166);
+}
+.task{
 
+  color: rgb(57, 175, 169)
+}
 </style>
