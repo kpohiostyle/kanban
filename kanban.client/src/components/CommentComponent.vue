@@ -1,8 +1,9 @@
 <template lang="">
-  <div class="col-sm-12 shadow my-1 bg-grey">
+  <div class="col-sm-12 shadow my-1 bg-light">
     <div class="d-flex flex-direction justify-content-between inline">
       <ul class="comment py-3">
-        {{ comment.body }}
+        <!-- {{ comment.body }} -->
+        <p>Comment: {{ comment.body }} || Author: {{ state.user.name }}</p>
       </ul>
       <button type="button" class="btn btn-danger" @click="deleteComment">
         Delete
@@ -29,7 +30,8 @@ export default {
     const state = reactive({
       newComment: {},
       comments: computed(() => AppState.comments),
-      tasks: computed(() => AppState.tasks)
+      tasks: computed(() => AppState.tasks),
+      user: computed(() => AppState.user)
 
     })
     onMounted(async() => {
