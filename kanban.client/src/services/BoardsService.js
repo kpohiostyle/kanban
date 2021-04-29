@@ -16,7 +16,7 @@ class BoardsService {
   async createBoard(newBoard) {
     const res = await api.post('api/boards', newBoard)
     AppState.boards.push(res.data)
-    // everytime a car is created, we will change pages
+    this.getAll()
   }
 
   async deleteBoard(id) {

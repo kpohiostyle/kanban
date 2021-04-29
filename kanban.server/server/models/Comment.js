@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 const Comment = new Schema(
   {
     body: { type: String, required: true },
-    CreatorId: { type: String, ref: 'Account', required: true },
-    TaskId: { type: Object, ref: 'Task', required: true }
+    creatorId: { type: String, ref: 'Account', required: true },
+    taskId: { type: Object, ref: 'Task', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

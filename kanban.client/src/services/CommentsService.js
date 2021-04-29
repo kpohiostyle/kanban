@@ -3,21 +3,20 @@ import { AppState } from '../AppState.js'
 import { api } from './AxiosService.js'
 
 class CommentsService {
-  async getComments(listId) {
-    const res = await api.get(`api/tasks/${listId}/comments`)
-    AppState.comments = res.data
+  async getComments(taskId) {
+    const res = await api.get(`api/tasks/${taskId}/comments`)
+    AppState.comments[taskId] = res.data
   }
 
   async createComment(newComment) {
     const res = await api.post('api/comments', newComment)
-    AppState.comments.push(res.data)
-    this.getComments(newComment.list)
-    // everytime a car is created, we will change pages
+    AppState.comments[newComment.taskId].push(res.data)
+    this.getComments(res.data.taskId)
   }
 
-  async deleteComment(id) {
+  async deleteComment(taskId, id) {
     await api.delete(`api/comments/${id}`)
-    AppState.comments = AppState.comments.filter(b => b.id !== id)
+    AppState.comments[taskId] = AppState.comments[taskId].filter(c => c.id !== id)
   }
 }
 

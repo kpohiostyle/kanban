@@ -12,14 +12,14 @@
       <div class="col-sm-12">
         <form @submit.prevent="createComment">
           <div class="form-group">
-            <label for="title">Comment Title</label>
+            <label for="body">Comment Title</label>
             <input type="text"
                    class="form-control"
-                   name="title"
-                   id="title"
+                   name="body"
+                   id="body"
                    aria-describedby="helpId"
                    placeholder="Add New Comment......"
-                   v-model="state.newComment.title"
+                   v-model="state.newComment.body"
             />
           </div>
           <button class="btn btn-success" type="submit">
@@ -52,7 +52,7 @@
 
     <div class="row">
       <div class="col">
-        <!-- CommentComponent -->
+        <CommentComponent v-for="comment in state.comments" :key="comment.id" :comment="comment" />
       </div>
     </div>
   </div>
@@ -76,16 +76,16 @@ export default {
     const route = useRoute()
     const state = reactive({
       newComment: {},
-      comments: computed(() => AppState.comments),
+      comments: computed(() => AppState.comments[props.task.id]),
       lists: computed(() => AppState.lists)
 
     })
     onMounted(async() => {
-      // try {
-      //   await tasksService.getComments(route.params.id)
-      // } catch (error) {
-      //   Notification.toast('Error: ' + error, 'error')
-      // }
+      try {
+        await commentsService.getComments(props.task.id)
+      } catch (error) {
+        Notification.toast('Error: ' + error, 'error')
+      }
     })
     return {
       route,
@@ -98,7 +98,7 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async createComment() {
+      async createTask() {
         try {
           state.newComment.taskId = props.task.id
           await commentsService.createTask(state.newComment)
@@ -115,7 +115,18 @@ export default {
         } catch (error) {
           Notification.toast('Error:' + error, 'error')
         }
+      },
+      async createComment() {
+        try {
+          state.newComment.taskId = props.task.id
+          await commentsService.createComment(state.newComment)
+          state.newComment = {}
+          Notification.toast('Added Comment', 'success')
+        } catch (error) {
+          Notification.toast('Error:' + error, 'error')
+        }
       }
+
     }
   },
   components: {}
