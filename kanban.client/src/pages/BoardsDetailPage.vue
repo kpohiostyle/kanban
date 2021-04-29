@@ -1,20 +1,20 @@
 <template lang="">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col shadow" v-if="state.activeBoard">
+    <div class="row justify-content-center">
+      <div class="col-6 shadow py-3" v-if="state.activeBoard">
         <div class="d-flex flex-direction inline justify-content-between">
-          <h5>{{ state.activeBoard.title }}</h5>
-          <button type="button" class="btn btn-danger" @click="deleteBoard">
-            Delete
+          <h2>{{ state.activeBoard.title }}</h2>
+          <button type="button" class="btn btn-small btn-outline-danger" @click="deleteBoard">
+            <i class="fas fa-trash-alt"></i>
           </button>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
-        <form @submit.prevent="createList">
+      <div class="col-sm-4">
+        <form @submit.prevent="createList" class="form-inline">
           <div class="form-group">
-            <label for="title">Title</label>
+            <label for="title"></label>
             <input type="text"
                    class="form-control"
                    name="title"
@@ -24,8 +24,8 @@
                    v-model="state.newList.title"
             />
           </div>
-          <button class="btn btn-success" type="submit">
-            Add List
+          <button class="btn bg-blueish mt-2 " type="submit">
+            <i class="fas fa-plus"> List</i>
           </button>
         </form>
       </div>
@@ -89,6 +89,8 @@ export default {
   components: {}
 }
 </script>
-<style lang="">
-
+<style scoped>
+button{
+  border: none;
+}
 </style>

@@ -2,24 +2,22 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
-        <form @submit.prevent="createBoard">
-          <div class="col-sm-6 d-flex flex-direction inline">
-            <div class="form-group">
-              <label for="title"></label>
-              <input type="text"
-                     class="form-control"
-                     name="title"
-                     id="title"
-                     aria-describedby="helpId"
-                     placeholder="Add New Board......"
-                     v-model="state.newBoard.title"
-                     required
-              />
-            </div>
-            <button class="btn bg-blueish mt-2" type="submit">
-              <i class="fas fa-plus fa-2x"></i>
-            </button>
+        <form @submit.prevent="createBoard" class="form-inline">
+          <div class="form-group">
+            <label for="title"></label>
+            <input type="text"
+                   class="form-control"
+                   name="title"
+                   id="title"
+                   aria-describedby="helpId"
+                   placeholder="Add New Board......"
+                   v-model="state.newBoard.title"
+                   required
+            />
           </div>
+          <button class="btn bg-blueish mt-2" type="submit">
+            <i class="fas fa-plus fa-2x"></i>
+          </button>
         </form>
       </div>
     </div>
