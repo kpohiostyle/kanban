@@ -26,6 +26,23 @@
             Add Comment
           </button>
         </form>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+          >
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <!-- <a class="dropdown-item" href="#">Action</a> -->
+            <a @click="editList(list.id)" class="dropdown-item text-dark" v-for="list in state.lists" :key="list.id">
+              {{ list.title }}
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -59,15 +76,16 @@ export default {
     const route = useRoute()
     const state = reactive({
       newComment: {},
-      comments: computed(() => AppState.comments)
+      comments: computed(() => AppState.comments),
+      lists: computed(() => AppState.lists)
 
     })
     onMounted(async() => {
-      try {
-        await tasksService.getComments(route.params.id)
-      } catch (error) {
-        Notification.toast('Error: ' + error, 'error')
-      }
+      // try {
+      //   await tasksService.getComments(route.params.id)
+      // } catch (error) {
+      //   Notification.toast('Error: ' + error, 'error')
+      // }
     })
     return {
       route,
@@ -86,6 +104,14 @@ export default {
           await commentsService.createTask(state.newComment)
           state.newComment = {}
           Notification.toast('Added Comment', 'success')
+        } catch (error) {
+          Notification.toast('Error:' + error, 'error')
+        }
+      },
+      async editList(id) {
+        try {
+          await tasksService.editTask(id, props.task)
+          Notification.toast('Task Moved', 'success')
         } catch (error) {
           Notification.toast('Error:' + error, 'error')
         }

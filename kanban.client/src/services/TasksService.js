@@ -18,9 +18,15 @@ class TasksService {
     AppState.tasks[listId] = AppState.tasks[listId].filter(t => t.id !== id)
   }
 
-  // async editTask(listId, body) {
-  //   await api.tasks.put(`api/tasks/${id}`)
-  // }
+  async editTask(newlistId, body) {
+    if (body.listId !== newlistId) {
+      const oldId = body.listId
+      body.listId = newlistId
+      await api.put(`api/tasks/${body.id}`, body)
+      this.getTasks(oldId)
+      this.getTasks(newlistId)
+    }
+  }
 }
 
 export const tasksService = new TasksService()

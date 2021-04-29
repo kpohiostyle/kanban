@@ -17,17 +17,21 @@ class TasksService {
     }
   }
 
-  async createComment(taskId, body) {
-    // const car = await this.findById(id)
-    // car.comments.push(body)
-    // await car.save()
-    // return car
-    const updated = await dbContext.Tasks.findOneAndUpdate({ _id: taskId }, { $push: { comments: body } }, { new: true })
-    if (!updated) {
-      throw new BadRequest('invalid id')
-    }
-    return updated
+  async editTask(body) {
+    await dbContext.Tasks.findOneAndUpdate({ _id: body.id, creatorId: body.creatorId }, body)
   }
+
+//   async createComment(taskId, body) {
+//     // const car = await this.findById(id)
+//     // car.comments.push(body)
+//     // await car.save()
+//     // return car
+//     const updated = await dbContext.Tasks.findOneAndUpdate({ _id: taskId }, { $push: { comments: body } }, { new: true })
+//     if (!updated) {
+//       throw new BadRequest('invalid id')
+//     }
+//     return updated
+//   }
 }
 
 export const tasksService = new TasksService()

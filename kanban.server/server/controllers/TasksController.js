@@ -10,9 +10,10 @@ export class TasksController extends BaseController {
     // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createTask)
-      .post('/:id/comments', this.addComment)
+      .put('/:id', this.editTask)
+      // .post('/:id/comments', this.addComment)
       .delete('/:id', this.deleteTask)
-      .delete('/:id/comments/:commentId', this.deleteComment)
+      // .delete('/:id/comments/:commentId', this.deleteComment)
   }
 
   async createTask(req, res, next) {
@@ -35,22 +36,32 @@ export class TasksController extends BaseController {
     }
   }
 
-  async addComment(req, res, next) {
+  async editTask(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      const task = await tasksService.createComment(req.params.id, req.body)
-      return res.send(task)
+      const data = await tasksService.editTask(req.body)
+      return res.send(data)
     } catch (error) {
       next(error)
     }
   }
 
-  async deleteComment(req, res, next) {
-    try {
-      const car = await tasksService.deleteComment(req.params.id, req.params.commentId, req.userInfo.id)
-      return res.send({ message: 'comment removed', data: car })
-    } catch (error) {
-      next(error)
-    }
-  }
+  // async addComment(req, res, next) {
+  //   try {
+  //     req.body.creatorId = req.userInfo.id
+  //     const task = await tasksService.createComment(req.params.id, req.body)
+  //     return res.send(task)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
+
+  // async deleteComment(req, res, next) {
+  //   try {
+  //     const car = await tasksService.deleteComment(req.params.id, req.params.commentId, req.userInfo.id)
+  //     return res.send({ message: 'comment removed', data: car })
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 }
