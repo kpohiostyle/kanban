@@ -6,8 +6,8 @@
     <router-view />
   </main>
   <footer>
-    <div class="bg-dark text-light text-center p-4">
-      Made with 💖 by CodeWorks
+    <div class="bg-custom text-light text-center p-4">
+      Made with power by Kevin & Daniel
     </div>
   </footer>
 </template>
@@ -26,5 +26,10 @@ export default {
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
-
+.bg-custom{
+  background-color: #390164
+}
+.bg-blueish{
+  color:#8bd1d3
+}
 </style>

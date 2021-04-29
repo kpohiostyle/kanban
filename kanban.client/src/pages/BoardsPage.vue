@@ -3,31 +3,36 @@
     <div class="row">
       <div class="col-sm-6">
         <form @submit.prevent="createBoard">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text"
-                   class="form-control"
-                   name="title"
-                   id="title"
-                   aria-describedby="helpId"
-                   placeholder="Add New Board......"
-                   v-model="state.newBoard.title"
-            />
+          <div class="col-sm-6 d-flex flex-direction inline">
+            <div class="form-group">
+              <label for="title"></label>
+              <input type="text"
+                     class="form-control"
+                     name="title"
+                     id="title"
+                     aria-describedby="helpId"
+                     placeholder="Add New Board......"
+                     v-model="state.newBoard.title"
+                     required
+              />
+            </div>
+            <button class="btn bg-blueish mt-2" type="submit">
+              <i class="fas fa-plus fa-2x"></i>
+            </button>
           </div>
-          <button class="btn btn-success" type="submit">
-            Add Board
-          </button>
         </form>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-4 mt-5">
+      <div class="col-md-4 mt-5">
         <div v-for="board in state.boards" :key="board.id" :board="board">
           <router-link :to="{name:'BoardsDetail', params:{id: board.id}}">
-            <p>
-              {{ board.title }}
-            </p>
+            <h4>
+              <span class="board">
+                {{ board.title }}
+              </span>
+            </h4>
           </router-link>
         </div>
       </div>
@@ -81,6 +86,16 @@ export default {
   components: {}
 }
 </script>
-<style lang="">
+<style>
+.board{
+  border-bottom: 1px solid #390164;
+  }
+a{
+  color: #8bd1d3;
 
+}
+a:hover {
+    color: #1f7cac;
+    text-decoration: none;
+}
 </style>
