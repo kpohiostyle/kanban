@@ -47,7 +47,7 @@ export class BoardsController extends BaseController {
 
   async deleteBoard(req, res, next) {
     try {
-      const data = await boardsService.deleteBoard(req.params.id)
+      const data = await boardsService.deleteBoard(req.params.id, req.userInfo.id)
       return res.send(data)
     } catch (error) {
       next(error)
