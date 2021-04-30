@@ -1,18 +1,35 @@
 <template lang="">
-  <div class="col-sm-12 shadow my-1 bg-grey">
-    <div class="d-flex flex-direction justify-content-between inline">
-      <h5 class="task py-3">
+  <div class=" bg-white col-md-10 p-0 border border-dark my-1">
+    <div class="task d-flex flex-direction justify-content-between inline">
+      <h5 class=" py-3">
         {{ task.title }}
       </h5>
-      <button type="button" class="btn btn-danger" @click="deleteTask">
-        Delete
+      <button type="button" class="btn btn-small btn-outline-danger" @click="deleteTask">
+        <i class="fas fa-trash-alt"></i>
       </button>
+      <div class="dropdown">
+        <button class="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+        >
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <!-- <a class="dropdown-item" href="#">Action</a> -->
+          <a @click="editList(list.id)" class="dropdown-item text-dark" v-for="list in state.lists" :key="list.id">
+            {{ list.title }}
+          </a>
+        </div>
+      </div>
     </div>
     <div class="row">
-      <div class="col-sm-12">
-        <form @submit.prevent="createComment">
+      <div class="col-md-12">
+        <form @submit.prevent="createComment" class="form-inline">
           <div class="form-group">
-            <label for="body">Comment Title</label>
+            <label for="body"></label>
             <input type="text"
                    class="form-control"
                    name="body"
@@ -20,29 +37,13 @@
                    aria-describedby="helpId"
                    placeholder="Add New Comment......"
                    v-model="state.newComment.body"
+                   required
             />
           </div>
-          <button class="btn btn-success" type="submit">
-            Add Comment
+          <button class="btn bg-blueish mt-2 " type="submit">
+            <i class="fas fa-plus"> Comment</i>
           </button>
         </form>
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-          >
-            <i class="fas fa-ellipsis-v"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <!-- <a class="dropdown-item" href="#">Action</a> -->
-            <a @click="editList(list.id)" class="dropdown-item text-dark" v-for="list in state.lists" :key="list.id">
-              {{ list.title }}
-            </a>
-          </div>
-        </div>
       </div>
     </div>
     <div class="row">
@@ -138,7 +139,12 @@ export default {
     background-color: rgb(167, 166, 166);
 }
 .task{
-
-  color: rgb(57, 175, 169)
+  background-color: #ebf3ee;
+}
+button{
+  border: none
+}
+a:hover{
+cursor: pointer;
 }
 </style>

@@ -11,8 +11,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4">
-        <form @submit.prevent="createList" class="form-inline">
+      <div class="col-md-4 ml-2">
+        <form @submit.prevent="createList" class="form-inline ">
           <div class="form-group">
             <label for="title"></label>
             <input type="text"

@@ -1,12 +1,12 @@
 <template lang="">
-  <div class="col-sm-12 shadow my-1 bg-light">
+  <div class="col-md-12 shadow my-1 bg-light">
     <div class="d-flex flex-direction justify-content-between inline">
-      <ul class="comment py-3">
+      <ul class="comment py-1">
         <!-- {{ comment.body }} -->
-        <p>Comment: {{ comment.body }} || Author: {{ state.user.name }}</p>
+        <p>{{ comment.body }} <small>{{ state.user.name }}</small></p>
       </ul>
-      <button type="button" class="btn btn-danger" @click="deleteComment">
-        Delete
+      <button type="button" class="btn btn-small btn-outline-danger" @click="deleteComment">
+        <i class="fas fa-trash-alt"></i>
       </button>
     </div>
   </div>
@@ -55,11 +55,7 @@ export default {
 }
 </script>
 <style scoped>
-.bg-grey{
-    background-color: rgb(255, 0, 0);
-}
-.comment{
-
-  color: rgb(57, 175, 169)
+button{
+  border: none;
 }
 </style>

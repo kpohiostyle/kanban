@@ -1,18 +1,18 @@
 <template lang="">
-  <div class="col-sm-4 shadow">
-    <div class="bg-grey d-flex flex-direction justify-content-between inline">
-      <h5 class="text-white py-3">
+  <div class="card-custom col-md-3 shadow">
+    <div class="border-custom d-flex flex-direction justify-content-between inline">
+      <h5 class="py-3 pl-2">
         {{ list.title }}
       </h5>
-      <button type="button" class="btn btn-danger" @click="deleteList">
-        Delete
+      <button type="button" class="btn btn-small btn-outline-danger" @click="deleteList">
+        <i class="fas fa-trash-alt"></i>
       </button>
     </div>
     <div class="row">
-      <div class="col-sm-12">
-        <form @submit.prevent="createTask">
+      <div class="col-md-12">
+        <form @submit.prevent="createTask" class="d-flex flex-direction justify-content-between form-inline">
           <div class="form-group">
-            <label for="title">Task Title</label>
+            <label for="title"></label>
             <input type="text"
                    class="form-control"
                    name="title"
@@ -20,10 +20,11 @@
                    aria-describedby="helpId"
                    placeholder="Add New Task......"
                    v-model="state.newTask.title"
+                   required
             />
           </div>
-          <button class="btn btn-success" type="submit">
-            Add Task
+          <button class="btn bg-blueish mt-2 " type="submit">
+            <i class="fas fa-plus"> Task</i>
           </button>
         </form>
       </div>
@@ -33,7 +34,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row justify-content-center">
       <TaskComponent v-for="task in state.tasks" :key="task.id" :task="task" />
     </div>
   </div>
@@ -95,7 +96,13 @@ export default {
 }
 </script>
 <style scoped>
-.bg-grey{
-  background-color: rgb(70, 70, 70);
+button{
+  border: none;
+}
+.border-custom{
+  border-bottom: 2px solid #390164;
+}
+.card-custom{
+  background-color: #ebf3ee
 }
 </style>
